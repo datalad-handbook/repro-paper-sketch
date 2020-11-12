@@ -97,15 +97,40 @@ def print_prediction_report(report):
     print('\\newcommand{\\accuracy}{%s}' % (acc))
 
 
-def main(data):
+def main(data, figure=True, stats=True):
+    """
+    Run the relevant functions from the script.
+    :param data: str; path to input data (will be retrieved with datalad, if necessary)
+    :param figure: bool; if True, plot_relationship() is executed to save a figure
+    :param stats: bool; if True, prediction stats are saved
+    """
     # get and load the data
     df = read_data(data)
-    # create a plot
-    plot_relationships(df)
-    # train, predict, evaluate, and save results of KNN classification
-    report = knn(df)
-    # print variables
-    print_prediction_report(report)
+    if figure:
+        # create a plot
+        plot_relationships(df)
+
+    if stats:
+        # train, predict, evaluate, and save results of KNN classification
+        report = knn(df)
+        # print variables
+        print_prediction_report(report)
+
 
 if __name__ == '__main__':
-    main(data)
+
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-f', '--figure', help='A switch to control if figures will be produced. '
+                               'Useful if you want to seperate statistics'
+                               'from figure generation',
+        action='store_true', default=True)
+    parser.add_argument(
+        '-s', '--stats', help='A switch to control if stats will be produced',
+        action='store_true', default=True)
+
+    args = parser.parse_args()
+    # generate & save figures; export the stats
+    main(data, figure=args.figure, stats=args.stats)
