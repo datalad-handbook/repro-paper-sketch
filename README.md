@@ -14,7 +14,7 @@ To run and adjust this template to your own manuscript or research project, you 
 
 * DataLad ([installation instructions](http://handbook.datalad.org/en/latest/intro/installation.html))
 * A handful of Python modules used in the template example (specified in [requirements.txt](./requirements.txt), to install at your convenience after cloning)
-* [latexmk](https://mg.readthedocs.io/latexmk.html) to render the PDF from ``main.tex``, and [make](https://www.gnu.org/software/make/)to run the Makefile
+* [latexmk](https://mg.readthedocs.io/latexmk.html) to render the PDF from ``main.tex``, and [make](https://www.gnu.org/software/make/) to run the Makefile
 
 ## How to use this template
 
@@ -23,7 +23,7 @@ For this, you should
 
 * `datalad clone` the repository:
 
-```
+```sh
 # don't copy leading $ - they only distinguish a command from a comment.
 $ datalad clone https://github.com/datalad-handbook/repro-paper-sketch.git
 ```
