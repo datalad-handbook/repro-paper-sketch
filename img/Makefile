@@ -1,5 +1,10 @@
 all: pics
 
+# This Makefile is useful when you want to save figures as SVG files (nicer for, e.g., version control).
+# It will use inkscape to render them to PDF files before building the manuscript.
+# In your .tex file, you can include your figures as .pdf even if your script saves
+# them as SVG.
+
 # Optionally some PICS could be ignored. By default XXX ones.
 # PICS_IGNORE must contain a rule for grep
 PICS_IGNORE ?= " "
