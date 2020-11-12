@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+"""
+This script is adapted from http://handbook.datalad.org/en/latest/basics/101-130-yodaproject.html
+"""
 
 import pandas as pd
 import seaborn as sns
