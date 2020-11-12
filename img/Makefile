@@ -21,6 +21,7 @@ clean:
 	for p in *.svg; do rm -f $${p%*.svg}.eps $${p%*.svg}.pdf; done
 	-rm -rf *_300dpi.png
 
+# This places figures that are dynamically generated into a .gitignore file
 .PHONY: ignore-%
 ignore-%:
 	@grep -q "^$*$$" .gitignore || { \
