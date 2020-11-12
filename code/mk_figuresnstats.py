@@ -16,7 +16,9 @@ def read_data(data):
     """
     Get and read in data.
     """
+    # if the data is not retrieved, get it using datalad get.
     dl.get(data)
+    # read data into a pandas dataframe
     df = pd.read_csv(data)
     attributes = ["sepal_length", "sepal_width", "petal_length", "petal_width",
                   "class"]
@@ -31,6 +33,7 @@ def plot_relationships(df):
     :param df: pandas dataframe
     """
     plot = sns.pairplot(df, hue='class', palette='muted')
+    # save the figure as a png.
     plot.savefig('img/pairwise_relationships.png')
 
 
@@ -40,6 +43,7 @@ def knn(df):
     results as a csv file
     :param df: pandas dataframe
     """
+    # split the data into training and testing data
     array = df.values
     X = array[:, 0:4]
     Y = array[:, 4]
@@ -48,12 +52,12 @@ def knn(df):
     X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, Y,
                                                                         test_size=test_size,
                                                                         random_state=seed)
-    # Step 2: Fit the model and make predictions on the test dataset
+    # Fit the model and make predictions on the test dataset
     knn = KNeighborsClassifier()
     knn.fit(X_train, Y_train)
     predictions = knn.predict(X_test)
 
-    # Step 3: Save the classification report
+    # Save the classification report
     report = classification_report(Y_test, predictions, output_dict=True)
     df_report = pd.DataFrame(report).transpose().to_csv('prediction_report.csv',
                                                         float_format='%.2f')
@@ -67,7 +71,9 @@ def print_prediction_report(report):
     and embedded into a manuscript.
     :param report: dict; sklearn classification report
     """
-
+    # iterate through the prediction report, and print each statistic as
+    # a Latex \newcommand{}{} definition. The resulting variables can be
+    # used in the manuscript to embed results.
     for key, labelprefix in [('Setosa', 'Setosa'),
                              ('Versicolor', 'Versicolor'),
                              ('Virginica', 'Virginica'),
