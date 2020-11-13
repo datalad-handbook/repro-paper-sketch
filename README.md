@@ -68,7 +68,10 @@ $ evince main.pdf
 # open code/mk_figuresnstats.py with an editor of your choice. Adjust the color palette
 # in the function plot_relationships() from "muted" to "Blues". You can also do
 # this from the terminal with this line of code:
-$ sed -i'.bak' 's/muted/Blues/g' code/mk_figuresnstats.py  
+# macOS
+$ sed -i' ' 's/muted/Blues/g' code/mk_figuresnstats.py  
+# linux
+$ sed -i 's/muted/Blues/g' code/mk_figuresnstats.py  
 # run make again
 $ make
 # take another look at the PDF to see how the figure was dynamically updated
