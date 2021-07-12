@@ -12,43 +12,43 @@ You can find out what DataLad datasets are in the short introduction [at the end
 
 To run and adjust this template to your own manuscript or research project, you will need to have the following software tools installed:
 
-* DataLad ([installation instructions](http://handbook.datalad.org/en/latest/intro/installation.html))
-* A handful of Python modules used in the template example (specified in [requirements.txt](./requirements.txt), to install at your convenience after cloning)
+* A Python installation
 * [latexmk](https://mg.readthedocs.io/latexmk.html) to render the PDF from ``main.tex``, and [make](https://www.gnu.org/software/make/) to run the Makefile
+* (Optionally) Inkscape, to render figures that are in SVG format
 
-## How to use this template
+## How to build the paper
 
-First, get an idea of what it does.
-For this, you should
 
-* `datalad clone` the repository:
+- `git clone` the repository:
 
 ```sh
 # don't copy leading $ - they only distinguish a command from a comment.
-$ datalad clone https://github.com/datalad-handbook/repro-paper-sketch.git
+$ git clone https://github.com/datalad-handbook/repro-paper-sketch.git
 ```
 
-* This template uses a Python script on a linked input dataset (`input/`) as an example analysis. 
-  You can adjust it to whichever programming or scripting language you prefer, and to whichever data you like.
-  If you want to run the template locally to get a hang on how it works, it is recommended (but optional) to create a [virtual Python environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/) first:
-
-```sh
-    # create and enter a new virtual environment (optional)
-    $ virtualenv --python=python3 ~/env/repro
-    $ . ~/env/repro/bin/activate
-```
-    
-* Afterwards, within the repository, install the relevant Python packages used in the template's example:
+- Create a [virtual environment](https://docs.python.org/3/tutorial/venv.html) and activate it:
 
 ```
-$ pip install -r requirements.txt
+# one way to create a virtual environment (called repro in this example):
+virtualenv --python=python3 ~/env/repro
+. ~/env/repro/bin/activate
 ```
 
-* Finally, run `make` to see how the template executes a Python script ([code/mk_figuresnstats.py](code/mk_figuresnstats.py)) on the linked ``input/`` dataset, collects & saves its results dynamically in result files & figures, and generates a manuscript that embeds the created results and figures on the fly.
-  The orchestration of this workflow takes place in the [Makefile](./Makefile), and comments in the relevant sections shed light on what each line does.
-  While the simple Makefile included in this template should get you started, an introduction to Makefiles can also be found in [The Turing Way handbook for reproducible research](https://the-turing-way.netlify.app/reproducible-research/make.html)
-* The resulting PDF will be called `main.pdf` and you will find it in the root of the dataset.  
-* If things go wrong during ``make``, run ``make clean`` to clean up any left-behind clutter.
+- run ``make``
+
+
+The resulting PDF will be called `main.pdf` and you will find it in the root of the dataset.
+If things go wrong during ``make``, run ``make clean`` to clean up any left-behind clutter.
+
+## How the setup works
+
+This repository is a DataLad dataset, and links data to scripts that compute numerical results or figures from it.
+The script saves figures and outputs numerical results.
+Orchestration with a Makefile ensures that these results are collected and that a manuscript that embeds the created results and figures on the fly is generated.
+If SVG figures exist in the `img/` directory, they will be rendered with inkscape to embed them, too.
+Comments in the Makefile in the relevant sections shed light on what each line does.
+While the simple Makefile included in this template should get you started, an introduction to Makefiles can also be found in [The Turing Way handbook for reproducible research](https://the-turing-way.netlify.app/reproducible-research/make.html)
+
 
 ### Quick start tutorial 
   
@@ -57,6 +57,9 @@ Afterwards, run ``make`` again to see your changes embedded in the manuscript.
 
 ```sh
 # We will assume you have the relevant software (Python, latexmk) set up
+# create a fresh virtual env and activate it
+$ virtualenv --python=python3 ~/env/repro
+$ . ~/env/repro/bin/active
 # generate the manuscript with unchanged code
 $ make
 # open the resulting PDF with a PDF viewer (for example evince)
@@ -69,8 +72,23 @@ $ sed -i 's/muted/Blues/g' code/mk_figuresnstats.py
 $ make
 # take another look at the PDF to see how the figure was dynamically updated
 ```  
-  
+
+
+## How to adjust the template
+
 If this setup with LaTeX and Makefiles suits your workflow, adjust code, manuscript, and data to your own research project.
+
+You can:
+- Change the contents of [requirements.txt](./requirements.txt) to Python modules of your choice.
+  They will be installed before executing the script.
+- Change the code, or add new code.
+  In the current template, the Python script ([code/mk_figuresnstats.py](code/mk_figuresnstats.py)) is executed.
+- Change the data.
+  In the current template, code operates on the linked ``input/`` DataLad dataset.
+  You can link any dataset of your choice with DataLad ([installation instructions and further info](http://handbook.datalad.org/en/latest/intro/installation.html))
+- Change the manuscript.
+  Adjust [main.tex](./main.tex) to your text of choice, add new figures, tables, or contents.
+
 
 * Install the data that you need as a subdataset called using
 
