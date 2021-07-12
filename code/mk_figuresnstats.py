@@ -124,7 +124,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-f', '--figure', help='A switch to control if figures will be produced. '
-                               'Useful if you want to seperate statistics'
+                               'Useful if you want to separate statistics'
                                'from figure generation',
         action='store_true', default=True)
     parser.add_argument(
