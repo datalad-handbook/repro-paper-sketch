@@ -2,8 +2,11 @@
 
 # Automatically Reproducible Paper Template
 
-This repository is a minimal template for creating an automatically reproducible paper using [DataLad](http://handbook.datalad.org/r.html?about), Python, Makefiles, and LaTeX.
-It is a simplified example of an actually published, reproducible paper that can be found [in this repository](https://github.com/psychoinformatics-de/paper-remodnav/), and created for use in workshops or tutorials.
+This repository is a minimal template for creating a dynamically generated, automatically reproducible paper using [DataLad](http://handbook.datalad.org/r.html?about), Python, Makefiles, and LaTeX.
+
+In this example, DataLad is used to link the manuscript to code and data. Within a Python script that computes results and figures, DataLad's Python API is used to retrieve data automatically. The LaTeX manuscript does not hard-code results or tables, but embeds external files or variables with results. The Python script saves its results and figures into the dataset, but also outputs results in form that they can be embedded into the manuscript as variables. To orchestrate code execution and LaTeX manuscript compiling, a Makefile is used. With this setup, generating a manuscript with freshly computed results is a matter of running a `make` command in a cloned repository.
+
+The template is meant to be used in workshops or tutorials and is therefore a simplified example. However, it is based on an actually published, reproducible paper that can be found [in this repository](https://github.com/psychoinformatics-de/paper-remodnav/).
 
 If you found this repository outside of a DataLad teaching event, do note that this repository is a DataLad dataset.
 You can find out what DataLad datasets are in the short introduction [at the end of this README](#DataLad-datasets-and-how-to-use-them), and at [handbook.datalad.org](http://handbook.datalad.org)
@@ -15,6 +18,7 @@ To run and adjust this template to your own manuscript or research project, you 
 * A Python installation
 * [latexmk](https://mg.readthedocs.io/latexmk.html) to render the PDF from ``main.tex``, and [make](https://www.gnu.org/software/make/) to run the Makefile
 * (Optionally) Inkscape, to render figures that are in SVG format
+
 
 ## How to build the paper
 
@@ -67,6 +71,9 @@ $ evince main.pdf
 # open code/mk_figuresnstats.py with an editor of your choice. Adjust the color palette
 # in the function plot_relationships() from "muted" to "Blues". You can also do
 # this from the terminal with this line of code:
+# macOS
+$ sed -i' ' 's/muted/Blues/g' code/mk_figuresnstats.py  
+# linux
 $ sed -i 's/muted/Blues/g' code/mk_figuresnstats.py  
 # run make again
 $ make
@@ -90,7 +97,7 @@ You can:
   Adjust [main.tex](./main.tex) to your text of choice, add new figures, tables, or contents.
 
 
-* Install the data that you need as a subdataset called using
+* Install the data that you need as a subdataset using
 
 ```sh
 $ datalad clone -d . <url>
@@ -101,6 +108,8 @@ $ datalad clone -d . <url>
 * write your manuscript, embedding all of your results as figures, tables, or variables.
  
 **Done. :)**
+
+If you are curious about how the manuscript PDF is actually built, make sure you read its content once you have successfully created it!
 
 *DISCLAIMER:* This is not the only way to generate a reproducible research object, and there are many tools out there that can achieve the same.
 This template is just one demonstration of one way to write a reproducible manuscript. 
@@ -147,14 +156,14 @@ DataLad datasets can contain other datasets, so called *subdatasets*.
 If you clone the top-level dataset, subdatasets do not yet contain
 metadata and information on the identity of files, but appear to be
 empty directories. In order to retrieve file availability metadata in
-subdatasets, run
+subdatasets, use `-n` flag like so:
 
 ```
 datalad get -n <path/to/subdataset>
 ```
 
 Afterwards, you can browse the retrieved metadata to find out about
-subdataset contents, and retrieve individual files with `datalad get`.
+subdataset contents, and use `datalad get` once again (no flag this time) to retrieve individual files.
 If you use `datalad get <path/to/subdataset>`, all contents of the
 subdataset will be downloaded at once.
 
